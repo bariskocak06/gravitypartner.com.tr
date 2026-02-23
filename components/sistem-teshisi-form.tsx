@@ -89,10 +89,35 @@ export function SistemTeshisiForm({
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-    }, 600);
+    const payload = new URLSearchParams({
+      "form-name": "sistem-teshisi",
+      name: values.name.trim(),
+      company: values.company.trim(),
+      email: values.email.trim(),
+      phone: values.phone.trim(),
+      sector: values.sector,
+      budget: values.budget,
+      platforms: values.platforms.join(", "),
+      goal: values.goal,
+      problem: values.problem.trim(),
+    });
+    fetch("/__forms.html", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload.toString(),
+    })
+      .then((res) => {
+        if (res.ok) {
+          setSubmitted(true);
+        } else {
+          setLoading(false);
+          setErrors((prev) => ({ ...prev, problem: "Gönderim başarısız. Lütfen tekrar deneyin." }));
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        setErrors((prev) => ({ ...prev, problem: "Bağlantı hatası. Lütfen tekrar deneyin." }));
+      });
   }
 
   function togglePlatform(p: string) {
@@ -139,12 +164,14 @@ export function SistemTeshisiForm({
         </>
       )}
       <motion.form
+        name="sistem-teshisi"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         onSubmit={handleSubmit}
         className={`rounded-xl border border-[#1F1F1F] bg-[#111111] p-6 shadow-inner sm:p-8 ${showTitle ? "mt-8" : ""}`}
       >
+        <input type="hidden" name="form-name" value="sistem-teshisi" />
         <div className="grid gap-5 sm:grid-cols-2">
           <FloatingInput
             id="st-name"
