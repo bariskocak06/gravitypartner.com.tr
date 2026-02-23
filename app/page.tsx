@@ -4,9 +4,10 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { SistemTeshisiForm } from "@/components/sistem-teshisi-form";
 
-const heroWordsLine1 = ["Kampanya", "yönetimi", "öldü."];
-const heroWordsLine2 = ["Büyüme", "mimarisi", "kazanıyor."];
+const heroWordsLine1 = ["Büyüme", "Mühendisliği."];
+const heroWordsLine2: string[] = [];
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -36,7 +37,7 @@ export default function Home() {
       };
 
   return (
-    <div className="relative overflow-hidden bg-background text-foreground">
+    <div className="relative overflow-hidden bg-background text-foreground" suppressHydrationWarning>
       <div className="pointer-events-none radial-highlight right-[-120px] top-[-80px]" />
       <div className="pointer-events-none mesh-blob left-[-240px] bottom-[-260px]" />
 
@@ -46,56 +47,29 @@ export default function Home() {
         <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-16 px-4 pb-20 pt-12 sm:px-6 lg:flex-row lg:items-center lg:gap-20 lg:px-8 lg:pb-24 lg:pt-10">
           {/* Left column */}
           <div className="flex-1 space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-400/80 bg-[#111127]/90 px-5 py-2 font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-100 shadow-[0_0_26px_rgba(129,140,248,0.9)]">
-              <span>REKLAM PERFORMANS ALTYAPISI</span>
-              <span className="h-3 w-[1px] bg-indigo-400" />
-              <span className="relative h-3 w-3">
-                <span className="absolute inset-0 animate-ping rounded-full bg-indigo-500/70" />
-                <span className="absolute inset-1 rounded-full bg-indigo-400" />
-              </span>
-            </div>
+            <p className="font-mono text-sm uppercase tracking-[0.35em] text-indigo-200/90 sm:text-base">
+              İŞLETMENİZİ BÜYÜTEN SİSTEMLER
+            </p>
 
-            <motion.h1
-              initial="hidden"
-              animate="visible"
-              variants={containerVariants}
-              className="w-full max-w-none text-[2.9rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[3.8rem] lg:text-[5rem]"
-            >
-              <span className="block">
-                {heroWordsLine1.map((word, idx) => (
-                  <motion.span
-                    key={word + idx}
-                    variants={wordVariants}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="inline-block pr-1"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
-              <span className="block">
-                {heroWordsLine2.map((word, idx) => (
-                  <motion.span
-                    key={word + idx}
-                    variants={wordVariants}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="inline-block pr-1"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
-            </motion.h1>
+            <h1 className="w-full max-w-none text-[2.9rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-[3.8rem] lg:text-[5rem]">
+              {heroWordsLine1.join(" ")}
+              {heroWordsLine2.length > 0 ? (
+                <>
+                  <br />
+                  {heroWordsLine2.join(" ")}
+                </>
+              ) : null}
+            </h1>
 
-            <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
+            <p className="max-w-xl text-sm text-zinc-300 sm:text-base leading-relaxed">
               Gravity, algoritmaların size karşı değil, sizin için çalışmasını sağlayan veri
               altyapısını kurar. İzleme, sinyal ve funnel mimarisini optimize eden sisteme
               göre tasarlarız.
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button size="lg" className="w-full sm:w-auto">
-                Marka Denetimi Talep Et
+              <Button size="lg" className="w-full sm:w-auto" asChild>
+                <Link href="/audit">Sistem Teşhisi Talep Et</Link>
               </Button>
               <Button
                 size="lg"
@@ -113,7 +87,15 @@ export default function Home() {
           </div>
 
           {/* Right column — metric cards */}
-          <div className="relative flex-1">
+          <div className="relative flex-1 flex flex-col gap-6">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-indigo-400/80 bg-[#111127]/90 px-5 py-2 font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-100 shadow-[0_0_26px_rgba(129,140,248,0.9)]">
+              <span>REKLAM PERFORMANS ALTYAPISI</span>
+              <span className="h-3 w-[1px] bg-indigo-400" />
+              <span className="relative h-3 w-3">
+                <span className="absolute inset-0 animate-ping rounded-full bg-indigo-500/70" />
+                <span className="absolute inset-1 rounded-full bg-indigo-400" />
+              </span>
+            </div>
             <div className="pointer-events-none absolute -right-20 -top-16 h-52 w-52 rounded-full bg-indigo-500/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 -left-10 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl" />
 
@@ -236,7 +218,7 @@ export default function Home() {
           <div className="space-y-5">
             <Label>SİSTEM MİMARİSİ</Label>
             <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[3.1rem] lg:leading-snug">
-              Kaybettiğiniz açık artırmanın içi.
+              Algoritmanın gizli katmanları.
             </h2>
           </div>
 
@@ -359,25 +341,58 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <ModuleCard
+            <SystemModuleCard
               tag="FOUNDATION"
-              title="Veri Altyapısı"
-              description="Pixel + CAPI entegrasyonu ve deduplication mantığı. EMQ skorunu 8+ seviyesine taşıma. Gerçek zamanlı event doğrulama."
+              accent="indigo"
+              title="Veri Altyapısı (Pixel + CAPI + Doğrulama)"
+              intro="Reklamın gerçekten hasta getirip getirmediğini ölçmeden bütçe büyütmeyiz."
+              bullets={[
+                "Web sitenize gelişmiş takip sistemi kurarız.",
+                "Meta Pixel + Server bağlantısı ile veri kaybını minimuma indiririz.",
+                "Aynı dönüşümün iki kez sayılmasını engelleriz (deduplication).",
+                "Veri kalitesini artırarak reklam algoritmasının sizi daha doğru hastalara göstermesini sağlarız.",
+                "Gerçek zamanlı kontrol paneli ile neyin çalıştığını anında görürüz.",
+              ]}
+              result="Tahmine dayalı değil, ölçülebilir büyüme."
             />
-            <ModuleCard
+            <SystemModuleCard
               tag="PERFORMANCE"
-              title="Creative Engineering"
-              description="Scroll davranışına göre kurgulanmış hook sistemi. Yorgunluk takibi ve otomatik creative rotasyon tetikleyicileri."
+              accent="emerald"
+              title="Creative Engineering (Tasarım Mühendisliği)"
+              intro='Reklam sadece "video çekmek" değildir.'
+              bullets={[
+                "İlk 3 saniyeyi scroll davranışına göre tasarlarız.",
+                "Hangi cümlenin durdurduğunu test ederiz.",
+                "Aynı kreatifi yormayız; sistem otomatik olarak varyasyon üretir ve değiştirir.",
+                "İzleyici sıkıldığında algoritma fark eder, içerik değişir.",
+              ]}
+              result="Daha düşük maliyet, daha yüksek dikkat."
             />
-            <ModuleCard
+            <SystemModuleCard
               tag="CONVERSION"
-              title="Funnel Mimarisi"
-              description="Landing page psikolojisi haritalaması. Sürtünme (friction) analizi. Öğrenmeyi hızlandırmak için micro-conversion dizilimi."
+              accent="violet"
+              title="Funnel Mimarisi (Dönüşüm Sistemi)"
+              intro="Reklamdan gelen kişi hemen hasta olmaz. Önce ikna olur. Biz:"
+              bullets={[
+                "Landing page psikolojisini planlarız.",
+                "Nerede tereddüt oluştuğunu analiz ederiz.",
+                "Formu daha kolay doldurulabilir hale getiririz.",
+                "Küçük adımlar (mikro dönüşümler) ile karar sürecini hızlandırırız.",
+              ]}
+              result="Aynı trafik → Daha fazla randevu."
             />
-            <ModuleCard
+            <SystemModuleCard
               tag="SCALE"
-              title="Scaling Mantığı"
-              description="Learning phase matematiği. Bütçe ölçekleme eşikleri. Stabilite kontrol protokolleri."
+              accent="cyan"
+              title="Scaling Mantığı (Büyütme Protokolü)"
+              intro="Reklamı rastgele artırmayız."
+              bullets={[
+                "Algoritmanın öğrenme sürecini tamamlamasını bekleriz.",
+                "Bütçeyi matematiksel eşiklere göre artırırız.",
+                "Ani yükseltmeler yerine stabil büyüme sağlarız.",
+                "Performans düşmeden ölçekleriz.",
+              ]}
+              result="Kontrollü büyüme → Gelir artışı."
             />
           </div>
         </motion.div>
@@ -425,29 +440,14 @@ export default function Home() {
         </motion.div>
       </Section>
 
-      {/* CTA BLOCK */}
-      <section className="border-y border-border bg-gradient-to-br from-[#050510] via-[#050505] to-[#050512]">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-          <motion.div
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mx-auto max-w-3xl text-center space-y-6"
-          >
-            <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-[2.3rem]">
-              Daha fazla reklama ihtiyacınız yok.
-              <br />
-              Çalışan bir sisteme ihtiyacınız var.
-            </h2>
-            <Button size="lg" className="mt-2 px-10 text-sm sm:text-base">
-              10 Dakikalık Audit Talep Et
-            </Button>
-            <p className="text-xs text-muted-foreground">
-              Taahhüt yok. Mevcut altyapınızı teşhis ediyoruz.
-            </p>
-          </motion.div>
+      {/* BÜYÜMEYE BAŞLA - Form */}
+      <section id="büyümeye-başla" className="border-t border-border bg-[#0D0D0D] px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <SistemTeshisiForm
+            title="Büyümeye Başla"
+            subtitle="10 dakikalık sistem teşhisi talebi. 24 saat içinde analiz başlar."
+            showTitle={true}
+          />
         </div>
       </section>
     </div>
@@ -703,25 +703,82 @@ function Connector() {
   );
 }
 
-function ModuleCard({
+const ACCENT_STYLES = {
+  indigo: {
+    card: "border-indigo-400/50 shadow-[0_0_24px_rgba(99,102,241,0.25)] hover:border-indigo-400/90 hover:shadow-[0_0_32px_rgba(99,102,241,0.6)]",
+    line: "from-indigo-500 via-indigo-400 to-indigo-500",
+    tag: "border-indigo-400/80 bg-indigo-500/20 text-indigo-200 shadow-[0_0_14px_rgba(99,102,241,0.6)]",
+    bullet: "text-indigo-400",
+    result: "text-indigo-300",
+  },
+  emerald: {
+    card: "border-emerald-400/50 shadow-[0_0_24px_rgba(16,185,129,0.25)] hover:border-emerald-400/90 hover:shadow-[0_0_32px_rgba(16,185,129,0.6)]",
+    line: "from-emerald-500 via-emerald-400 to-emerald-500",
+    tag: "border-emerald-400/80 bg-emerald-500/20 text-emerald-200 shadow-[0_0_14px_rgba(16,185,129,0.6)]",
+    bullet: "text-emerald-400",
+    result: "text-emerald-300",
+  },
+  violet: {
+    card: "border-violet-400/50 shadow-[0_0_24px_rgba(139,92,246,0.25)] hover:border-violet-400/90 hover:shadow-[0_0_32px_rgba(139,92,246,0.6)]",
+    line: "from-violet-500 via-violet-400 to-violet-500",
+    tag: "border-violet-400/80 bg-violet-500/20 text-violet-200 shadow-[0_0_14px_rgba(139,92,246,0.6)]",
+    bullet: "text-violet-400",
+    result: "text-violet-300",
+  },
+  cyan: {
+    card: "border-cyan-400/50 shadow-[0_0_24px_rgba(34,211,238,0.25)] hover:border-cyan-400/90 hover:shadow-[0_0_32px_rgba(34,211,238,0.6)]",
+    line: "from-cyan-500 via-cyan-400 to-cyan-500",
+    tag: "border-cyan-400/80 bg-cyan-500/20 text-cyan-200 shadow-[0_0_14px_rgba(34,211,238,0.6)]",
+    bullet: "text-cyan-400",
+    result: "text-cyan-300",
+  },
+} as const;
+
+function SystemModuleCard({
   tag,
+  accent = "indigo",
   title,
-  description,
+  intro,
+  bullets,
+  result,
 }: {
   tag: string;
+  accent?: keyof typeof ACCENT_STYLES;
   title: string;
-  description: string;
+  intro: string;
+  bullets: string[];
+  result: string;
 }) {
+  const s = ACCENT_STYLES[accent];
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-border bg-[#111123] p-5 transition-all duration-200 hover:-translate-y-1 hover:border-indigo-400/90 hover:shadow-[0_0_32px_rgba(129,140,248,0.7)]">
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-indigo-500 via-emerald-400 to-indigo-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="text-sm font-semibold text-zinc-50">{title}</h3>
-        <span className="rounded-full border border-indigo-500/40 bg-[#101020] px-2 py-0.5 text-[10px] font-mono uppercase tracking-[0.18em] text-indigo-200">
-          {tag}
-        </span>
+    <div
+      className={`group relative flex min-h-[200px] flex-col overflow-hidden rounded-xl border bg-[#111123] p-6 transition-all duration-200 ${s.card}`}
+    >
+      <div
+        className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${s.line} opacity-0 transition-opacity duration-200 group-hover:opacity-100`}
+      />
+      <h3 className="text-xl font-semibold leading-tight text-white sm:text-2xl">
+        {title}
+      </h3>
+      <span
+        className={`mt-2 inline-block w-fit rounded border px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.2em] ${s.tag}`}
+      >
+        {tag}
+      </span>
+      <div className="mt-4 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-[600px] group-hover:opacity-100">
+        <p className="text-sm text-zinc-300">{intro}</p>
+        <ul className="mt-3 space-y-2 text-sm text-zinc-400">
+          {bullets.map((item, i) => (
+            <li key={i} className="flex gap-2">
+              <span className={s.bullet}>*</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p className={`mt-4 text-sm font-medium ${s.result}`}>
+          Sonuç: {result}
+        </p>
       </div>
-      <p className="mt-3 text-xs text-muted-foreground">{description}</p>
     </div>
   );
 }

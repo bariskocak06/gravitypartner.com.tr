@@ -35,6 +35,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-background text-foreground`}
+        suppressHydrationWarning
       >
         <div className="flex min-h-screen flex-col bg-background text-foreground">
           <Navbar />
