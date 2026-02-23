@@ -90,6 +90,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                scroll
                 className={`relative transition-colors hover:text-zinc-100 ${
                   active ? "text-zinc-100" : ""
                 }`}
@@ -138,7 +139,8 @@ export function Navbar() {
               transition={{ duration: 0.2 }}
               className="fixed inset-0 z-30 bg-black/70 backdrop-blur-sm sm:hidden"
               onClick={() => setIsMenuOpen(false)}
-              aria-hidden
+              aria-hidden="true"
+              role="presentation"
             />
             <motion.div
               initial={{ opacity: 0, y: -12 }}
@@ -155,7 +157,8 @@ export function Navbar() {
                       key={link.href}
                       href={link.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`rounded-lg px-4 py-3 text-base font-medium transition ${
+                      scroll
+                      className={`block rounded-lg px-4 py-3 text-base font-medium transition ${
                         active
                           ? "bg-indigo-500/15 text-indigo-200"
                           : "text-zinc-300 hover:bg-[#1a1a1a] hover:text-zinc-100"
@@ -167,7 +170,7 @@ export function Navbar() {
                 })}
                 <div className="mt-4 border-t border-[#1F1F1F] pt-4">
                   <Button variant="outline" size="lg" className="w-full" asChild>
-                    <Link href="/audit" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/audit" onClick={() => setIsMenuOpen(false)} scroll>
                       Sistem Teşhisi Talep Et
                     </Link>
                   </Button>

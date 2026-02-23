@@ -531,6 +531,7 @@ function Sparkline({ color }: { color: string }) {
       className="h-8 w-full"
       aria-hidden="true"
       role="img"
+      suppressHydrationWarning
     >
       <polyline
         fill="none"
@@ -539,6 +540,7 @@ function Sparkline({ color }: { color: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         points="2,24 10,18 20,22 30,14 40,16 50,10 60,14 70,8 80,12 90,6 100,10 110,4 118,6"
+        suppressHydrationWarning
       />
     </svg>
   );
@@ -550,6 +552,7 @@ function ArrowUpIcon() {
       viewBox="0 0 16 16"
       className="h-3.5 w-3.5 text-emerald-300"
       aria-hidden="true"
+      suppressHydrationWarning
     >
       <path
         d="M3 9.5 7.5 5l4.5 4.5M7.5 6v7"
@@ -592,7 +595,7 @@ function ProblemCard({
 
 function BrokenSignalIcon() {
   return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true">
+    <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true" suppressHydrationWarning>
       <path
         d="M4 14a6 6 0 0 1 6-6m0-4A10 10 0 0 0 2 12m11.5-6.5A10 10 0 0 1 18 12m-4-1a6 6 0 0 0-6 6"
         fill="none"
@@ -613,7 +616,7 @@ function BrokenSignalIcon() {
 
 function ServerOffIcon() {
   return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true">
+    <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true" suppressHydrationWarning>
       <rect
         x="3"
         y="3"
@@ -649,7 +652,7 @@ function ServerOffIcon() {
 
 function BrokenFunnelIcon() {
   return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true">
+    <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true" suppressHydrationWarning>
       <path
         d="M4 4h12l-4 5v3.5l-4 2.5V9L4 4Z"
         fill="none"

@@ -1,0 +1,13 @@
+# Netlify build configuration for Next.js
+# https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Node 20 (matches .nvmrc and package.json engines)
+[build.environment]
+  NODE_VERSION = "20"
+
+# Next.js on Netlify uses OpenNext adapter automatically when framework is detected.
+# No need to add @netlify/plugin-nextjs unless you want to pin a specific version.

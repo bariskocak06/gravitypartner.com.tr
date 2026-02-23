@@ -37,6 +37,7 @@ export interface FormErrors {
   name?: string;
   company?: string;
   email?: string;
+  phone?: string;
   sector?: string;
   budget?: string;
   platforms?: string;
@@ -401,6 +402,7 @@ function FloatingSelect({
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          suppressHydrationWarning
         >
           <path
             strokeLinecap="round"

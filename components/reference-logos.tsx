@@ -54,7 +54,7 @@ const REFERENCE_ORDER: { name: string; src: string | null }[] = [
 export function ReferenceLogos() {
   const withLogos = REFERENCE_ORDER.filter((r) => r.src !== null);
   return (
-    <div className="border-t border-[#1F1F1F] bg-[#111111] py-10">
+    <div className="min-h-[200px] border-t border-[#1F1F1F] bg-[#111111] py-10">
       <div className="mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
         <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.24em] text-zinc-400">
           Referanslar
@@ -92,6 +92,7 @@ export function ReferenceLogos() {
                   height={isGaranti ? 144 : isXl ? 96 : isLarge ? 80 : 48}
                   className={`w-auto object-contain ${maxHClass}`}
                   suppressHydrationWarning
+                  unoptimized
                 />
               </div>
             );
