@@ -11,3 +11,9 @@
 
 # Next.js on Netlify uses OpenNext adapter automatically when framework is detected.
 # No need to add @netlify/plugin-nextjs unless you want to pin a specific version.
+
+# Kısa önbellek: güncellemeler (özellikle mobil) hemen görünsün
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
