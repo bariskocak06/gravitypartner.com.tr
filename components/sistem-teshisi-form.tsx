@@ -89,8 +89,11 @@ export function SistemTeshisiForm({
     e.preventDefault();
     if (!validate()) return;
     setLoading(true);
+    const form = e.currentTarget;
+    const botFieldValue = form.querySelector<HTMLInputElement>('input[name="bot-field"]')?.value ?? "";
     const payload = new URLSearchParams({
       "form-name": "sistem-teshisi",
+      "bot-field": botFieldValue,
       name: values.name.trim(),
       company: values.company.trim(),
       email: values.email.trim(),
@@ -101,7 +104,7 @@ export function SistemTeshisiForm({
       goal: values.goal,
       problem: values.problem.trim(),
     });
-    fetch("/__forms.html", {
+    fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: payload.toString(),
@@ -172,6 +175,10 @@ export function SistemTeshisiForm({
         className={`rounded-xl border border-[#1F1F1F] bg-[#111111] p-6 shadow-inner sm:p-8 ${showTitle ? "mt-8" : ""}`}
       >
         <input type="hidden" name="form-name" value="sistem-teshisi" />
+        <div className="absolute -left-[9999px] opacity-0 pointer-events-none" aria-hidden="true">
+          <label htmlFor="st-bot-field">Bu alanı doldurmayın</label>
+          <input type="text" id="st-bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
+        </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <FloatingInput
             id="st-name"

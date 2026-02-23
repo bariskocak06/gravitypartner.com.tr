@@ -1,6 +1,7 @@
 /* Home page for Gravity — meta performance infrastructure */
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -752,13 +753,23 @@ function SystemModuleCard({
   bullets: string[];
   result: string;
 }) {
+  const [expanded, setExpanded] = useState(false);
   const s = ACCENT_STYLES[accent];
   return (
     <div
-      className={`group relative flex min-h-[200px] flex-col overflow-hidden rounded-xl border bg-[#111123] p-6 transition-all duration-200 ${s.card}`}
+      role="button"
+      tabIndex={0}
+      onClick={() => setExpanded((e) => !e)}
+      onKeyDown={(ev) => {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          setExpanded((e) => !e);
+        }
+      }}
+      className={`group relative flex min-h-[200px] cursor-pointer flex-col overflow-hidden rounded-xl border bg-[#111123] p-6 transition-all duration-200 ${s.card}`}
     >
       <div
-        className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${s.line} opacity-0 transition-opacity duration-200 group-hover:opacity-100`}
+        className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${s.line} opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${expanded ? "opacity-100" : ""}`}
       />
       <h3 className="text-xl font-semibold leading-tight text-white sm:text-2xl">
         {title}
@@ -768,7 +779,13 @@ function SystemModuleCard({
       >
         {tag}
       </span>
-      <div className="mt-4 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-[600px] group-hover:opacity-100">
+      <div
+        className={`mt-4 overflow-hidden transition-all duration-300 ease-out ${
+          expanded
+            ? "max-h-[600px] opacity-100"
+            : "max-h-0 opacity-0 md:group-hover:max-h-[600px] md:group-hover:opacity-100"
+        }`}
+      >
         <p className="text-sm text-zinc-300">{intro}</p>
         <ul className="mt-3 space-y-2 text-sm text-zinc-400">
           {bullets.map((item, i) => (
