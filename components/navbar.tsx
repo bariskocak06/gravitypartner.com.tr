@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/solutions", label: "Solutions" },
+  { href: "/", label: "Ana Sayfa" },
+  { href: "/solutions", label: "Çözümler" },
   { href: "/audit", label: "Audit" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "Hakkımızda" },
+  { href: "/contact", label: "İletişim" },
 ];
 
 export function Navbar() {
@@ -30,6 +30,7 @@ export function Navbar() {
 
   return (
     <motion.header
+      suppressHydrationWarning
       style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
       className={`sticky top-0 z-40 border-b border-border/80 transition-colors ${
         isScrolled ? "bg-[#050505]/95" : "bg-[#050505]/80"
@@ -72,7 +73,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <Button variant="outline" size="sm" className="hidden sm:inline-flex">
-            Get Audit
+            Audit Talep Et
           </Button>
         </div>
       </div>

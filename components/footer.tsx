@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 const footerLinks = [
-  { href: "/solutions", label: "Solutions" },
+  { href: "/solutions", label: "Çözümler" },
   { href: "/audit", label: "Audit" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-  { href: "/privacy", label: "Privacy" },
+  { href: "/about", label: "Hakkımızda" },
+  { href: "/contact", label: "İletişim" },
+  { href: "/privacy", label: "Gizlilik" },
 ];
 
 export function Footer() {
@@ -14,11 +14,11 @@ export function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <div className="space-y-2 text-xs text-muted-foreground">
           <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400">
-            technology · art · growth ·{" "}
-            <span className="text-zinc-100">GRAVITY: THE CENTER OF GROWTH</span>
+            teknoloji · sanat · büyüme ·{" "}
+            <span className="text-zinc-100">GRAVITY: BÜYÜMENİN MERKEZİ</span>
           </div>
           <div className="font-mono text-[11px] text-zinc-500">
-            © {new Date().getFullYear()} Gravity Systems. All rights reserved.
+            © {new Date().getFullYear()} Gravity Systems. Tüm hakları saklıdır.
           </div>
         </div>
         <nav className="flex flex-wrap gap-4 text-xs text-zinc-500">

@@ -17,9 +17,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gravity — Meta Performance Infrastructure",
+  title: "Gravity — Meta Performans Altyapısı",
   description:
-    "Gravity builds data infrastructure and Meta advertising systems that make algorithms work for you, not against you.",
+    "Gravity, Meta reklam algoritmalarının sizin aleyhinize değil, lehinize çalışmasını sağlayan veri altyapısı ve performans sistemleri kurar.",
 };
 
 export default function RootLayout({
