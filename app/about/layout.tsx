@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: "Hakkımızda | Gravity",
   description:
     "Gravity, performans reklamcılığını mühendislik disiplinine taşıyan bir büyüme altyapısı partneridir. Ajans değil. Growth Infrastructure Partner.",
+  keywords: ["Gravity", "hakkımızda", "büyüme altyapısı", "performans reklamcılığı", "growth partner"],
 };
 
 export default function AboutLayout({

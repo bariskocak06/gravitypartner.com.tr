@@ -17,9 +17,40 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://gravitypartner.com.tr"
+  ),
   title: "Gravity — Meta Performans Altyapısı",
   description:
     "Gravity, Meta reklam algoritmalarının sizin aleyhinize değil, lehinize çalışmasını sağlayan veri altyapısı ve performans sistemleri kurar.",
+  keywords: [
+    "Meta reklam",
+    "performans reklamcılığı",
+    "CAPI",
+    "Meta Pixel",
+    "reklam altyapısı",
+    "büyüme mühendisliği",
+    "dijital reklam",
+    "ROAS",
+    "EMQ",
+    "sinyal kalitesi",
+    "Gravity",
+  ],
+  openGraph: {
+    title: "Gravity — Meta Performans Altyapısı",
+    description:
+      "Gravity, Meta reklam algoritmalarının sizin aleyhinize değil, lehinize çalışmasını sağlayan veri altyapısı ve performans sistemleri kurar.",
+    url: "/",
+    siteName: "Gravity",
+    locale: "tr_TR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gravity — Meta Performans Altyapısı",
+    description:
+      "Gravity, Meta reklam algoritmalarının sizin aleyhinize değil, lehinize çalışmasını sağlayan veri altyapısı ve performans sistemleri kurar.",
+  },
 };
 
 // Önbellek kapalı: her istek güncel içerik (mobil güncelleme sorunu için)
@@ -31,11 +62,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gravitypartner.com.tr";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Gravity",
+    description:
+      "Gravity, Meta reklam algoritmalarının sizin aleyhinize değil, lehinize çalışmasını sağlayan veri altyapısı ve performans sistemleri kurar.",
+    url: baseUrl,
+    logo: `${baseUrl}/favicon.ico`,
+  };
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="tr" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-background text-foreground`}
