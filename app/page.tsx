@@ -224,8 +224,8 @@ export default function Home() {
           </div>
 
           {/* Diagram */}
-          <div className="overflow-hidden rounded-xl border border-border bg-[#0b0b0f] p-6 sm:p-8">
-            <div className="flex flex-col items-stretch gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="overflow-hidden rounded-xl border border-border bg-[#0b0b0f] p-3 sm:p-6 md:p-8">
+            <div className="flex flex-col items-stretch gap-2 sm:gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
               <AuctionNode label="ADVERTISER" />
               <Connector />
               <AuctionNode label="SIGNAL" />
@@ -676,17 +676,17 @@ function BrokenFunnelIcon() {
 function AuctionNode({ label }: { label: string }) {
   return (
     <motion.div
-      className="flex h-24 min-w-[140px] flex-col justify-center rounded-lg border border-border bg-[#111123] px-5 text-sm text-zinc-200"
+      className="flex h-14 min-w-0 flex-shrink-0 flex-col justify-center rounded-lg border border-border bg-[#111123] px-3 py-2 text-zinc-200 sm:h-20 sm:min-w-[120px] sm:px-4 sm:py-0 md:h-24 md:min-w-[140px] md:px-5"
       whileHover={{
         boxShadow: "0 0 20px rgba(99,102,241,0.4)",
         borderColor: "rgba(99,102,241,0.9)",
       }}
       transition={{ duration: 0.2, ease: "easeOut" }}
     >
-      <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-500">
+      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 sm:text-[11px] sm:tracking-[0.24em]">
         NODE
       </span>
-      <span className="mt-1 text-sm sm:text-base font-semibold text-zinc-100">
+      <span className="mt-0.5 text-xs font-semibold leading-tight text-zinc-100 sm:mt-1 sm:text-sm md:text-base">
         {label}
       </span>
     </motion.div>

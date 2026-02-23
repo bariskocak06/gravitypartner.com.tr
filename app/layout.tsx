@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     "Gravity, Meta reklam algoritmalarının sizin aleyhinize değil, lehinize çalışmasını sağlayan veri altyapısı ve performans sistemleri kurar.",
 };
 
+// Önbellek kapalı: her istek güncel içerik (mobil güncelleme sorunu için)
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default function RootLayout({
   children,
 }: Readonly<{
