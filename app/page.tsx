@@ -5,8 +5,8 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const heroWordsLine1 = ["Campaign", "management", "is", "dead."];
-const heroWordsLine2 = ["Growth", "architecture", "wins."];
+const heroWordsLine1 = ["Kampanya", "yönetimi", "öldü."];
+const heroWordsLine2 = ["Büyüme", "mimarisi", "kazanıyor."];
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -46,8 +46,8 @@ export default function Home() {
         <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-16 px-4 pb-20 pt-12 sm:px-6 lg:flex-row lg:items-center lg:gap-20 lg:px-8 lg:pb-24 lg:pt-10">
           {/* Left column */}
           <div className="flex-1 space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-400/60 bg-[#111127]/90 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-indigo-200 shadow-[0_0_22px_rgba(129,140,248,0.65)]">
-              <span>META PERFORMANS ALTYAPISI</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-400/80 bg-[#111127]/90 px-5 py-2 font-mono text-[11px] uppercase tracking-[0.3em] text-indigo-100 shadow-[0_0_26px_rgba(129,140,248,0.9)]">
+              <span>REKLAM PERFORMANS ALTYAPISI</span>
               <span className="h-3 w-[1px] bg-indigo-400" />
               <span className="relative h-3 w-3">
                 <span className="absolute inset-0 animate-ping rounded-full bg-indigo-500/70" />
@@ -89,13 +89,13 @@ export default function Home() {
 
             <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
               Gravity, algoritmaların size karşı değil, sizin için çalışmasını sağlayan veri
-              altyapısını kurar. İzleme, sinyal ve funnel mimarisini Meta&apos;nın gerçekten
-              optimize ettiği sisteme göre tasarlarız.
+              altyapısını kurar. İzleme, sinyal ve funnel mimarisini optimize eden sisteme
+              göre tasarlarız.
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Button size="lg" className="w-full sm:w-auto">
-                Sistem Auditi Talep Et
+                Marka Denetimi Talep Et
               </Button>
               <Button
                 size="lg"
@@ -108,7 +108,7 @@ export default function Home() {
             </div>
 
             <p className="text-xs font-mono uppercase tracking-[0.24em] text-zinc-400">
-              7 sektörde performans ekipleri tarafından güvenilen altyapı
+              22 sektörde performans ekipleri tarafından güvenilen altyapı
             </p>
           </div>
 
@@ -117,7 +117,7 @@ export default function Home() {
             <div className="pointer-events-none absolute -right-20 -top-16 h-52 w-52 rounded-full bg-indigo-500/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 -left-10 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl" />
 
-            <div className="relative grid grid-cols-2 gap-4 sm:gap-5">
+            <div className="relative grid grid-cols-2 gap-5 sm:gap-6">
               {/* EMQ Score */}
               <MetricCard
                 title="EMQ Score"
@@ -191,9 +191,9 @@ export default function Home() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="space-y-10"
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
             <Label>ASIL PROBLEM</Label>
-            <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl">
+            <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl lg:text-[2.9rem] lg:leading-snug">
               <span className="block">
                 Çoğu markanın trafik sorunu yok.
               </span>
@@ -233,9 +233,9 @@ export default function Home() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="space-y-10"
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
             <Label>SİSTEM MİMARİSİ</Label>
-            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[3.1rem] lg:leading-snug">
               Kaybettiğiniz açık artırmanın içi.
             </h2>
           </div>
@@ -256,29 +256,75 @@ export default function Home() {
           </div>
 
           {/* Explanation */}
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2 items-start">
             <div className="space-y-3 text-sm text-muted-foreground sm:text-base">
               <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-300">
                 Total Value formülü
               </p>
-              <p className="font-mono text-xs text-zinc-200 sm:text-sm">
-                Total Value = Bid × Estimated Action Rate × Ad Quality
+              <div className="inline-flex max-w-xl flex-wrap items-center gap-1 rounded-md border border-indigo-500/70 bg-[#090918] px-3 py-1.5 font-mono text-[11px] text-indigo-100 shadow-[0_0_18px_rgba(129,140,248,0.6)] sm:text-xs">
+                <span className="text-zinc-100">Total Value</span>
+                <span className="text-zinc-500">=</span>
+                <span className="text-emerald-300">Bid</span>
+                <span className="text-zinc-500">×</span>
+                <span className="text-sky-300">Estimated Action Rate</span>
+                <span className="text-zinc-500">×</span>
+                <span className="text-violet-300">Ad Quality</span>
+              </div>
+              <p>
+                Her açık artırma, bu denklemi milisaniyeler içinde hesaplar. Mesele ne
+                kadar harcadığınız değil, ne kadar güvenilir sinyal ürettiğinizdir.
               </p>
               <p>
-                Her açık artırma bu formülü milisaniyeler içinde hesaplar. Teklifinizden
-                çok sinyal kaliteniz önemlidir. Meta event&apos;lerinize güvenemiyorsa,
-                kimin aksiyon alacağını doğru tahmin edemez ve bütçeniz gürültüde harcanır.
+                Google, Meta veya TikTok size güvenmiyorsa; kimin aksiyon alacağını doğru
+                tahmin edemez.
+              </p>
+              <p>
+                Tahmin zayıfsa, dağıtım zayıflar. Dağıtım zayıfsa, bütçe gürültüde erir.
+              </p>
+              <p className="font-medium text-white">Sonuç?</p>
+              <p>
+                Sizden daha az harcayan ama daha temiz veri, daha güçlü içerik ve daha net
+                dönüşüm sinyali üreten hesap öne çıkar.
+              </p>
+              <p className="font-mono text-xs uppercase tracking-[0.24em] text-emerald-300 sm:text-sm">
+                Reklam bütçesi değil, sinyal kalitesi kazanır.
               </p>
             </div>
             <div className="space-y-3 text-sm text-muted-foreground sm:text-base">
               <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-300">
                 EMQ ve Estimated Action Rate
               </p>
+              <div className="inline-flex max-w-xl flex-wrap items-center gap-1 rounded-md border border-emerald-500/70 bg-[#041712] px-3 py-1.5 font-mono text-[11px] text-emerald-100 shadow-[0_0_18px_rgba(16,185,129,0.6)] sm:text-xs">
+                <span className="text-emerald-200">Yüksek EMQ</span>
+                <span className="text-zinc-500">=</span>
+                <span className="text-emerald-300">Net kimlik eşleşmesi</span>
+                <span className="text-zinc-500">+</span>
+                <span className="text-sky-300">Temiz veri akışı</span>
+                <span className="text-zinc-500">+</span>
+                <span className="text-lime-300">Güçlü event mimarisi</span>
+              </div>
               <p>
-                EMQ (Event Match Quality) doğrudan Estimated Action Rate&apos;i etkiler. 6
-                altındaki skor, algoritmanın kimin dönüşüm sağlayacağını güvenilir
-                şekilde öngöremediği anlamına gelir ve bu durumda, geniş ama pahalı
-                gösterimlere geri döner.
+                EMQ (Event Match Quality), Estimated Action Rate&apos;in temel girdisidir.
+                Algoritma, dönüşüm ihtimalini bu eşleşme kalitesi üzerinden modeller.
+              </p>
+              <p>
+                Skor 6&apos;nın altına düştüğünde algoritma şunu anlar: Bu kullanıcı eşleşmesi
+                yeterince güvenilir değil.
+              </p>
+              <p>
+                Belirsizlik arttığında sistem riskten kaçınır. Yüksek niyetli doğru kitle
+                yerine, alakasız ama pahalı gösterimlere döner.
+              </p>
+              <p className="font-medium text-white">Sonuç?</p>
+              <p>
+                CPM yükselir, dönüşüm oranı düşer, bütçe verimsiz dağılır.
+              </p>
+              <p>
+                Sizden daha az harcayan ama daha yüksek EMQ, daha net event mimarisi ve daha
+                güçlü veri eşleşmesi olan hesap öne çıkar.
+              </p>
+              <p className="font-mono text-xs uppercase tracking-[0.24em] text-emerald-300 sm:text-sm">
+                Bütçe değil, eşleşme kalitesi kazanır.
               </p>
             </div>
           </div>
@@ -427,7 +473,7 @@ function Section({
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-indigo-300">
+    <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.32em] text-indigo-200">
       {children}
     </p>
   );
@@ -453,26 +499,26 @@ function MetricCard({
 
   return (
     <motion.div
-      className={`float-card rounded-xl border ${accentColor} bg-[#0c0c12]/90 p-4 backdrop-blur`}
+      className={`float-card rounded-xl border ${accentColor} bg-[#0c0c12]/90 p-5 sm:p-6 min-h-[150px] sm:min-h-[180px] backdrop-blur`}
       style={{ animationDuration: floatDuration }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="flex items-center justify-between text-[11px] text-zinc-400">
+      <div className="flex items-center justify-between text-[12px] text-zinc-300">
         <span>{title}</span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-zinc-500">
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-zinc-400">
           LIVE
         </span>
       </div>
       <div className="mt-3 flex items-baseline gap-2">
         <div
-          className={`font-mono text-xl ${
+          className={`font-mono text-2xl sm:text-[2rem] ${
             accent === "indigo" ? "text-indigo-300" : "text-emerald-300"
           }`}
         >
           {value}
         </div>
       </div>
-      <p className="mt-1 text-[11px] text-zinc-500">{subtitle}</p>
+      <p className="mt-1 text-[12px] text-zinc-400">{subtitle}</p>
       <div className="mt-3">{children}</div>
     </motion.div>
   );
@@ -527,15 +573,19 @@ function ProblemCard({
   text: string;
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-border bg-[#141427] p-5 transition-transform transition-shadow hover:-translate-y-1 hover:shadow-[0_0_32px_rgba(129,140,248,0.55)]">
+    <div className="group relative overflow-hidden rounded-xl border border-border bg-[#141427] p-6 sm:p-7 transition-transform transition-shadow hover:-translate-y-1 hover:shadow-[0_0_32px_rgba(129,140,248,0.55)]">
       <div className="absolute inset-y-0 left-0 w-[2px] bg-gradient-to-b from-indigo-500 via-indigo-400 to-transparent" />
       <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#141420] text-indigo-300">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#141420] text-indigo-300">
           {icon}
         </div>
-        <h3 className="text-sm font-semibold text-zinc-50">{title}</h3>
+        <h3 className="text-base sm:text-lg font-semibold text-zinc-50">
+          {title}
+        </h3>
       </div>
-      <p className="mt-3 text-xs text-muted-foreground">{text}</p>
+      <p className="mt-3 text-sm sm:text-base text-muted-foreground">
+        {text}
+      </p>
     </div>
   );
 }
@@ -622,17 +672,17 @@ function BrokenFunnelIcon() {
 function AuctionNode({ label }: { label: string }) {
   return (
     <motion.div
-      className="flex h-20 min-w-[120px] flex-col justify-center rounded-lg border border-border bg-[#111123] px-4 text-xs text-zinc-200"
+      className="flex h-24 min-w-[140px] flex-col justify-center rounded-lg border border-border bg-[#111123] px-5 text-sm text-zinc-200"
       whileHover={{
         boxShadow: "0 0 20px rgba(99,102,241,0.4)",
         borderColor: "rgba(99,102,241,0.9)",
       }}
       transition={{ duration: 0.2, ease: "easeOut" }}
     >
-      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+      <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-500">
         NODE
       </span>
-      <span className="mt-1 text-[11px] font-semibold text-zinc-100">
+      <span className="mt-1 text-sm sm:text-base font-semibold text-zinc-100">
         {label}
       </span>
     </motion.div>

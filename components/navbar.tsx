@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -42,16 +43,26 @@ export function Navbar() {
         aria-hidden="true"
       />
       <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-18 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-mono text-xs tracking-[0.25em] text-zinc-300">
-            GRAVITY
-          </span>
-          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-indigo-500 shadow-[0_0_12px_rgba(99,102,241,0.8)]">
-            <span className="absolute inset-0 rounded-full bg-indigo-400/60 blur-[3px]" />
-          </span>
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/gravity-logo.svg"
+            alt="Gravity logosu"
+            width={40}
+            height={40}
+            className="h-9 w-9 object-contain drop-shadow-[0_0_20px_rgba(148,163,253,1)]"
+            priority
+          />
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-lg tracking-[0.25em] text-zinc-100">
+              GRAVITY
+            </span>
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-indigo-500 shadow-[0_0_14px_rgba(99,102,241,0.9)]">
+              <span className="absolute inset-0 rounded-full bg-indigo-400/70 blur-[3px]" />
+            </span>
+          </div>
         </Link>
 
-        <nav className="hidden items-center gap-8 text-xs font-medium text-zinc-400 sm:flex">
+        <nav className="hidden items-center gap-8 text-base font-medium text-zinc-200 sm:flex">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
@@ -73,7 +84,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <Button variant="outline" size="sm" className="hidden sm:inline-flex">
-            Audit Talep Et
+            Marka Denetimi Talep Et
           </Button>
         </div>
       </div>
