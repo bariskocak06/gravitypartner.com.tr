@@ -19,6 +19,7 @@ export default function FreedomePage() {
   const [apiKeyError, setApiKeyError] = useState<string | null>(null);
   const [isProcessingFile, setIsProcessingFile] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/freedome/status")
@@ -65,7 +66,12 @@ export default function FreedomePage() {
   };
 
   const processFile = (file: File) => {
-    if (!file?.type.startsWith("image/")) {
+    if (!file || file.size === 0) {
+      if (file?.size === 0) alert("Görsel boş görünüyor. Lütfen tekrar çekin veya galeriden seçin.");
+      return;
+    }
+    const isImage = file.type.startsWith("image/") || file.type === "";
+    if (!isImage) {
       alert("Lütfen geçerli bir resim dosyası yükleyin.");
       return;
     }
@@ -73,6 +79,11 @@ export default function FreedomePage() {
     const reader = new FileReader();
     reader.onloadend = async () => {
       const dataUrl = reader.result as string;
+      if (!dataUrl || !dataUrl.startsWith("data:image/")) {
+        alert("Görsel okunamadı. Lütfen galeriden seçin veya tekrar çekin.");
+        setIsProcessingFile(false);
+        return;
+      }
       try {
         const compressed = await compressImage(dataUrl);
         setUploadedImage(compressed);
@@ -81,6 +92,10 @@ export default function FreedomePage() {
       } finally {
         setIsProcessingFile(false);
       }
+    };
+    reader.onerror = () => {
+      alert("Dosya okunamadı. Lütfen tekrar deneyin.");
+      setIsProcessingFile(false);
     };
     reader.readAsDataURL(file);
   };
@@ -187,10 +202,9 @@ export default function FreedomePage() {
       {step === 0 && (
         <div className="flex-1 flex flex-col justify-center items-center w-full">
           <div className="w-full max-w-2xl mx-auto bg-card/80 p-8 rounded-3xl border border-border backdrop-blur-lg">
-            <label
-              htmlFor="freedome-file-input"
-              className={`block w-full aspect-video bg-background/60 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all mb-6 touch-manipulation ${
-                isDragging ? "border-primary bg-primary/10" : "border-border hover:border-primary active:border-primary"
+            <div
+              className={`w-full aspect-video bg-background/60 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-3 mb-6 touch-manipulation ${
+                isDragging ? "border-primary bg-primary/10" : "border-border"
               }`}
               onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
               onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
@@ -202,24 +216,50 @@ export default function FreedomePage() {
               }}
             >
               {isProcessingFile ? (
-                <p className="text-primary font-mono text-sm pointer-events-none animate-pulse">Hazırlanıyor…</p>
+                <p className="text-primary font-mono text-sm animate-pulse">Hazırlanıyor…</p>
               ) : uploadedImage ? (
-                <img src={uploadedImage} alt="Önizleme" className="w-full h-full object-contain opacity-80 pointer-events-none rounded-2xl" />
+                <img src={uploadedImage} alt="Önizleme" className="w-full h-full object-contain opacity-80 rounded-2xl" />
               ) : (
                 <>
-                  <p className="text-primary font-mono text-sm tracking-widest uppercase pointer-events-none">
+                  <p className="text-primary font-mono text-sm tracking-widest uppercase">
                     Ürün fotoğrafını yükle
                   </p>
-                  <p className="text-muted-foreground text-xs mt-2 pointer-events-none">galeri veya kamera</p>
+                  <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
+                    <label
+                      htmlFor="freedome-file-camera"
+                      className="px-4 py-2.5 bg-primary text-white font-mono text-xs uppercase tracking-wider rounded-lg cursor-pointer touch-manipulation hover:opacity-90 active:opacity-80"
+                    >
+                      Kameradan çek
+                    </label>
+                    <label
+                      htmlFor="freedome-file-gallery"
+                      className="px-4 py-2.5 border border-border text-foreground font-mono text-xs uppercase tracking-wider rounded-lg cursor-pointer touch-manipulation hover:bg-card active:opacity-80"
+                    >
+                      Galeriden seç
+                    </label>
+                  </div>
                 </>
               )}
-            </label>
+            </div>
             <input
-              id="freedome-file-input"
+              id="freedome-file-camera"
+              type="file"
+              ref={cameraInputRef}
+              className="sr-only"
+              accept="image/*"
+              capture="environment"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) processFile(file);
+                e.target.value = "";
+              }}
+            />
+            <input
+              id="freedome-file-gallery"
               type="file"
               ref={fileInputRef}
               className="sr-only"
-              accept="image/*"
+              accept="image/*,image/heic,image/heif"
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) processFile(file);
