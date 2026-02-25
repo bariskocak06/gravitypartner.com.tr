@@ -15,13 +15,20 @@ export default function FreedomePage() {
   const [imageWarning, setImageWarning] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [apiKeyConfigured, setApiKeyConfigured] = useState<boolean | null>(null);
+  const [apiKeyError, setApiKeyError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/freedome/status")
       .then((r) => r.json())
-      .then((data) => setApiKeyConfigured(data.ok === true))
-      .catch(() => setApiKeyConfigured(false));
+      .then((data) => {
+        setApiKeyConfigured(data.ok === true);
+        setApiKeyError(data.error ?? null);
+      })
+      .catch(() => {
+        setApiKeyConfigured(false);
+        setApiKeyError("Bağlantı hatası.");
+      });
   }, []);
 
   const processFile = (file: File) => {
@@ -96,17 +103,23 @@ export default function FreedomePage() {
     <div className="relative z-10 container mx-auto px-4 py-8 min-h-screen flex flex-col">
       {apiKeyConfigured === false && (
         <div className="mb-6 rounded-xl border border-amber-500/50 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
-          <p className="font-semibold">Gemini API anahtarı tanımlı değil</p>
+          <p className="font-semibold">Gemini API anahtarı sorunu</p>
           <p className="mt-1 text-amber-200/90">
-            Analiz çalışması için <strong>GEMINI_API_KEY</strong> ortam değişkeni gerekli.
-            Yerelde: proje kökünde <code className="rounded bg-black/30 px-1">.env.local</code> dosyasına{" "}
+            {apiKeyError ? (
+              apiKeyError
+            ) : (
+              <>
+                Analiz çalışması için <strong>GEMINI_API_KEY</strong> ortam değişkeni gerekli.
+                Yerelde: proje kökünde <code className="rounded bg-black/30 px-1">.env.local</code> dosyasına{" "}
             <code className="rounded bg-black/30 px-1">GEMINI_API_KEY=your_key</code> ekleyin.
             Netlify’da: Site → Environment variables → <code className="rounded bg-black/30 px-1">GEMINI_API_KEY</code>.
             Anahtar:{" "}
-            <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
-              Google AI Studio
-            </a>
-            .
+                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
+                  Google AI Studio
+                </a>
+                .
+              </>
+            )}
           </p>
         </div>
       )}

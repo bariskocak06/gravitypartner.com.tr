@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getGeminiApiKey } from "@/lib/gemini-key";
 
 function cleanBase64(dataUrl: string): string {
   return dataUrl.includes(",") ? dataUrl.split(",")[1]! : dataUrl;
@@ -26,7 +27,7 @@ export async function POST(request: NextRequest) {
         ? originalImageBase64
         : `data:image/jpeg;base64,${originalImageBase64}`;
 
-    const geminiKey = process.env.GEMINI_API_KEY;
+    const geminiKey = getGeminiApiKey();
     const imagePrompt = `Place this product into a new environment: ${visualPrompt}. Style: award-winning commercial photography, 8k, detailed, cinematic lighting. Product is the central focus. Do not alter the product's design, color, or shape. Only change the background and lighting. No text in the image. Output a single image.`;
 
     if (nanoBananaKey) {
@@ -82,7 +83,11 @@ export async function POST(request: NextRequest) {
     if (geminiKey) {
       try {
         const modelId = "gemini-2.5-flash-image";
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${geminiKey}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${encodeURIComponent(geminiKey)}`;
+        const headers: Record<string, string> = {
+          "Content-Type": "application/json",
+          "x-goog-api-key": geminiKey,
+        };
         const geminiBody = {
           contents: [
             {
@@ -100,7 +105,7 @@ export async function POST(request: NextRequest) {
         };
         const gRes = await fetch(url, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify(geminiBody),
         });
         const gData = (await gRes.json()) as {
@@ -111,9 +116,12 @@ export async function POST(request: NextRequest) {
         };
         if (!gRes.ok) {
           const errMsg = gData.error?.message || `HTTP ${gRes.status}`;
+          const isInvalidKey = errMsg.includes("API key not valid") || gRes.status === 400 || gRes.status === 403;
           return NextResponse.json({
             imageBase64: imageBase64ForFallback,
-            warning: `Gemini görsel: ${errMsg}. Orijinal görsel kullanıldı.`,
+            warning: isInvalidKey
+              ? "API anahtarı geçersiz. Netlify'da GEMINI_API_KEY'ı Google AI Studio anahtarı ile güncelleyin."
+              : `Gemini görsel: ${errMsg}. Orijinal görsel kullanıldı.`,
           });
         }
         const parts = gData.candidates?.[0]?.content?.parts ?? [];

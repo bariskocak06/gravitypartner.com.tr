@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { AnalysisResult } from "@/lib/freedome-types";
+import { getGeminiApiKey } from "@/lib/gemini-key";
 
 const SYSTEM_PROMPT = `SEN "FINAL FUSION: SUPER-AI NEURO MARKETING CORE" (Kod Adı: AURORA).
 Sen, kuantum nöro-mühendislik prensipleriyle çalışan, kendini optimize eden bir yapay zekasın.
@@ -21,7 +22,8 @@ let cachedModelId: string | null = null;
 async function getGenerateContentModelId(key: string): Promise<string> {
   if (cachedModelId) return cachedModelId;
   const listRes = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models?key=${key}`
+    `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`,
+    { headers: { "x-goog-api-key": key } }
   );
   const listData = (await listRes.json()) as {
     models?: Array<{
@@ -47,7 +49,7 @@ async function getGenerateContentModelId(key: string): Promise<string> {
 }
 
 export async function POST(request: NextRequest) {
-  const key = process.env.GEMINI_API_KEY;
+  const key = getGeminiApiKey();
   if (!key) {
     return NextResponse.json(
       { error: "GEMINI_API_KEY ortam değişkeni tanımlı değil." },
@@ -91,22 +93,36 @@ export async function POST(request: NextRequest) {
     };
     const modelId = await getGenerateContentModelId(key);
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${key}`,
-      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(geminiPayload) }
+      `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${encodeURIComponent(key)}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+        body: JSON.stringify(geminiPayload),
+      }
     );
     const data = (await res.json()) as {
       candidates?: Array<{ content?: { parts?: Array<{ text?: string }> }; finishReason?: string }>;
       error?: { message?: string; code?: number };
     };
+    const errMsg = data.error?.message ?? "";
+    const isInvalidKey = errMsg.includes("API key not valid") || res.status === 400 || res.status === 403;
     if (!res.ok) {
       return NextResponse.json(
-        { error: "Gemini API hatası: " + (data.error?.message || res.statusText) },
+        {
+          error: isInvalidKey
+            ? "API anahtarı geçersiz. Netlify'da Site configuration → Environment variables → GEMINI_API_KEY değerini Google AI Studio (aistudio.google.com/apikey) anahtarı ile güncelleyin."
+            : "Gemini API hatası: " + (errMsg || res.statusText),
+        },
         { status: res.status >= 400 ? res.status : 502 }
       );
     }
     if (data.error) {
       return NextResponse.json(
-        { error: "Gemini API hatası: " + (data.error.message || "Yanıt alınamadı.") },
+        {
+          error: isInvalidKey
+            ? "API anahtarı geçersiz. Netlify'da GEMINI_API_KEY'ı doğru anahtar ile ayarlayın."
+            : "Gemini API hatası: " + (data.error.message || "Yanıt alınamadı."),
+        },
         { status: 502 }
       );
     }

@@ -29,6 +29,16 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Netlify (FreeDome için ortam değişkeni)
+
+Canlı sitede FreeDome çalışsın diye Netlify’da **Environment variables** bölümüne şunu ekleyin:
+
+- **Key:** `GEMINI_API_KEY`
+- **Value:** [Google AI Studio](https://aistudio.google.com/apikey) API anahtarınız
+- **Scope:** Production (veya All)
+
+Detaylı adımlar: [docs/NETLIFY-ENV.md](docs/NETLIFY-ENV.md)
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
