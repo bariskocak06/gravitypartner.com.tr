@@ -12,8 +12,12 @@ export default function FreedomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="freedome-aurora min-h-screen bg-[#050b14] text-gray-200">
-      {children}
+    <div className="relative min-h-screen bg-background text-foreground overflow-hidden">
+      <div className="pointer-events-none radial-highlight right-[-120px] top-[-80px]" />
+      <div className="pointer-events-none mesh-blob left-[-240px] bottom-[-260px]" />
+      <div className="relative dot-grid min-h-screen">
+        {children}
+      </div>
     </div>
   );
 }
