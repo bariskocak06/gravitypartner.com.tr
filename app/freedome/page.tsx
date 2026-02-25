@@ -17,6 +17,7 @@ export default function FreedomePage() {
   const [isDragging, setIsDragging] = useState(false);
   const [apiKeyConfigured, setApiKeyConfigured] = useState<boolean | null>(null);
   const [apiKeyError, setApiKeyError] = useState<string | null>(null);
+  const [isProcessingFile, setIsProcessingFile] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -32,14 +33,56 @@ export default function FreedomePage() {
       });
   }, []);
 
+  const compressImage = (dataUrl: string, maxSize = 1200, quality = 0.82): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+        const scale = Math.min(1, maxSize / Math.max(w, h));
+        const cw = Math.round(w * scale);
+        const ch = Math.round(h * scale);
+        const canvas = document.createElement("canvas");
+        canvas.width = cw;
+        canvas.height = ch;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          resolve(dataUrl);
+          return;
+        }
+        ctx.drawImage(img, 0, 0, cw, ch);
+        try {
+          const out = canvas.toDataURL("image/jpeg", quality);
+          resolve(out);
+        } catch {
+          resolve(dataUrl);
+        }
+      };
+      img.onerror = () => reject(new Error("Görsel yüklenemedi"));
+      img.src = dataUrl;
+    });
+  };
+
   const processFile = (file: File) => {
-    if (file?.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => setUploadedImage(reader.result as string);
-      reader.readAsDataURL(file);
-    } else {
+    if (!file?.type.startsWith("image/")) {
       alert("Lütfen geçerli bir resim dosyası yükleyin.");
+      return;
     }
+    setIsProcessingFile(true);
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const dataUrl = reader.result as string;
+      try {
+        const compressed = await compressImage(dataUrl);
+        setUploadedImage(compressed);
+      } catch {
+        setUploadedImage(dataUrl);
+      } finally {
+        setIsProcessingFile(false);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleGenerate = async () => {
@@ -144,8 +187,11 @@ export default function FreedomePage() {
       {step === 0 && (
         <div className="flex-1 flex flex-col justify-center items-center w-full">
           <div className="w-full max-w-2xl mx-auto bg-card/80 p-8 rounded-3xl border border-border backdrop-blur-lg">
-            <div
-              onClick={() => fileInputRef.current?.click()}
+            <label
+              htmlFor="freedome-file-input"
+              className={`block w-full aspect-video bg-background/60 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all mb-6 touch-manipulation ${
+                isDragging ? "border-primary bg-primary/10" : "border-border hover:border-primary active:border-primary"
+              }`}
               onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
               onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
               onDrop={(e) => {
@@ -154,29 +200,30 @@ export default function FreedomePage() {
                 const file = e.dataTransfer.files?.[0];
                 if (file) processFile(file);
               }}
-              className={`w-full aspect-video bg-background/60 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all mb-6 ${
-                isDragging ? "border-primary bg-primary/10" : "border-border hover:border-primary"
-              }`}
             >
-              {uploadedImage ? (
-                <img src={uploadedImage} alt="Önizleme" className="w-full h-full object-contain opacity-80" />
+              {isProcessingFile ? (
+                <p className="text-primary font-mono text-sm pointer-events-none animate-pulse">Hazırlanıyor…</p>
+              ) : uploadedImage ? (
+                <img src={uploadedImage} alt="Önizleme" className="w-full h-full object-contain opacity-80 pointer-events-none rounded-2xl" />
               ) : (
                 <>
-                  <p className="text-primary font-mono text-sm tracking-widest uppercase">
-                    {isDragging ? "Görseli bırak!" : "Ürün fotoğrafını yükle"}
+                  <p className="text-primary font-mono text-sm tracking-widest uppercase pointer-events-none">
+                    Ürün fotoğrafını yükle
                   </p>
-                  <p className="text-muted-foreground text-xs mt-2">veya tıkla</p>
+                  <p className="text-muted-foreground text-xs mt-2 pointer-events-none">galeri veya kamera</p>
                 </>
               )}
-            </div>
+            </label>
             <input
+              id="freedome-file-input"
               type="file"
               ref={fileInputRef}
-              className="hidden"
+              className="sr-only"
               accept="image/*"
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) processFile(file);
+                e.target.value = "";
               }}
             />
             <label className="block text-primary text-xs font-mono font-bold mb-2 uppercase tracking-wider">
@@ -189,11 +236,12 @@ export default function FreedomePage() {
               className="w-full bg-background/60 border border-border rounded-xl p-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30 h-32 resize-none mb-6"
             />
             {uploadedImage && (
-              <div className="flex justify-center w-full">
+              <div className="flex justify-center w-full pt-1">
                 <Button
+                  type="button"
                   onClick={handleGenerate}
                   size="lg"
-                  className="w-full sm:w-auto min-w-[280px] font-mono uppercase tracking-[0.2em]"
+                  className="w-full sm:w-auto min-w-[280px] min-h-[48px] py-3 font-mono uppercase tracking-[0.2em] touch-manipulation"
                 >
                   Hedef kitle ve reklam analizini başlat
                 </Button>
