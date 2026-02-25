@@ -119,8 +119,9 @@ export async function POST(request: NextRequest) {
         const parts = gData.candidates?.[0]?.content?.parts ?? [];
         for (const part of parts) {
           const id = part.inlineData ?? (part as { inline_data?: { mime_type?: string; data?: string } }).inline_data;
-          const mime = id?.mimeType ?? (id as { mime_type?: string })?.mime_type ?? "image/png";
-          const data = id?.data ?? (id as { data?: string })?.data;
+          const raw = id as { mimeType?: string; mime_type?: string; data?: string } | undefined;
+          const mime = raw?.mimeType ?? raw?.mime_type ?? "image/png";
+          const data = raw?.data;
           if (data) {
             const dataUrl = data.startsWith("data:") ? data : `data:${mime};base64,${data}`;
             return NextResponse.json({ imageBase64: dataUrl, source: "gemini" });
