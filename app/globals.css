@@ -100,3 +100,12 @@ body {
   animation: none !important;
   transition: none !important;
 }
+
+/* FreeDome / Özgür Reklam Mimarı sayfası için Aurora paleti */
+.freedome-aurora {
+  --aurora-dark: #050b14;
+  --aurora-panel: #0f172a;
+  --aurora-accent: #06b6d4;
+  --aurora-gold: #fbbf24;
+  --aurora-purple: #8b5cf6;
+}
