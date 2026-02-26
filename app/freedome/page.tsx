@@ -18,8 +18,20 @@ export default function FreedomePage() {
   const [apiKeyConfigured, setApiKeyConfigured] = useState<boolean | null>(null);
   const [apiKeyError, setApiKeyError] = useState<string | null>(null);
   const [isProcessingFile, setIsProcessingFile] = useState(false);
+  const [useCount, setUseCount] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+
+  const FREEDOME_COUNT_KEY = "freedome_use_count";
+
+  useEffect(() => {
+    try {
+      const n = parseInt(localStorage.getItem(FREEDOME_COUNT_KEY) ?? "0", 10);
+      setUseCount(Number.isNaN(n) ? 0 : n);
+    } catch {
+      setUseCount(0);
+    }
+  }, []);
 
   useEffect(() => {
     fetch("/api/freedome/status")
@@ -148,6 +160,13 @@ export default function FreedomePage() {
       }
       if (lastWarning) setImageWarning(lastWarning);
       setGeneratedImages(imageMap);
+      try {
+        const next = useCount + 1;
+        setUseCount(next);
+        localStorage.setItem(FREEDOME_COUNT_KEY, String(next));
+      } catch {
+        /* ignore */
+      }
       setStep(2);
     } catch (e) {
       console.error(e);
@@ -190,6 +209,9 @@ export default function FreedomePage() {
           <p className="text-xs text-indigo-200/80 tracking-[0.4em] mt-2 uppercase font-mono">
             Özgür Reklam Mimarı
           </p>
+          <p className="text-[11px] text-muted-foreground mt-2 font-mono">
+            İlk deneme ücretsiz, sonrası ücretlidir.
+          </p>
         </div>
         <Link
           href="/"
@@ -202,6 +224,18 @@ export default function FreedomePage() {
 
       {step === 0 && (
         <div className="flex-1 flex flex-col justify-center items-center w-full">
+          {useCount >= 1 && (
+            <div className="w-full max-w-2xl mx-auto mb-4 rounded-xl border border-amber-500/50 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+              <p className="font-semibold">İkinci deneme ücretlidir</p>
+              <p className="mt-1 text-amber-200/90">
+                Ücretsiz denemenizi kullandınız. Devam etmek için{" "}
+                <Link href="/contact" className="underline hover:text-white" title="İletişim">
+                  Gravity ile iletişime geçin
+                </Link>
+                .
+              </p>
+            </div>
+          )}
           <div className="w-full max-w-2xl mx-auto bg-card/80 p-8 rounded-3xl border border-border backdrop-blur-lg">
             <div
               className={`w-full aspect-video bg-background/60 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-3 mb-6 touch-manipulation ${
