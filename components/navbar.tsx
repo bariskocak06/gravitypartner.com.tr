@@ -62,7 +62,7 @@ export function Navbar() {
         />
       )}
       <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-18 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3" title="Gravity - Ana Sayfa">
           <span suppressHydrationWarning className="block h-9 w-9">
             <Image
               src="/gravity-logo.svg"
@@ -92,6 +92,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 scroll
+                title={link.label}
                 className={`relative transition-colors hover:text-zinc-100 ${
                   active ? "text-zinc-100" : ""
                 }`}
@@ -107,7 +108,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
-            <Link href="/audit">Sistem Teşhisi Talep Et</Link>
+            <Link href="/audit" title="Sistem Teşhisi Talep Et">Sistem Teşhisi Talep Et</Link>
           </Button>
           <button
             type="button"
@@ -159,6 +160,7 @@ export function Navbar() {
                       href={link.href}
                       onClick={() => setIsMenuOpen(false)}
                       scroll
+                      title={link.label}
                       className={`block rounded-lg px-4 py-3 text-base font-medium transition ${
                         active
                           ? "bg-indigo-500/15 text-indigo-200"
@@ -171,7 +173,7 @@ export function Navbar() {
                 })}
                 <div className="mt-4 border-t border-[#1F1F1F] pt-4">
                   <Button variant="outline" size="lg" className="w-full" asChild>
-                    <Link href="/audit" onClick={() => setIsMenuOpen(false)} scroll>
+                    <Link href="/audit" onClick={() => setIsMenuOpen(false)} scroll title="Sistem Teşhisi Talep Et">
                       Sistem Teşhisi Talep Et
                     </Link>
                   </Button>

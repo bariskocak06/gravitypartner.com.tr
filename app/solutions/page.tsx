@@ -154,12 +154,12 @@ export default function SolutionsPage() {
                     </div>
                     <div className="mt-auto flex flex-wrap gap-3 pt-4">
                       <Button variant="outline" size="sm" asChild>
-                        <Link href={`/solutions/${sector.slug}`}>
+                        <Link href={`/solutions/${sector.slug}`} title={`${sector.title} - Sistemi İncele`}>
                           Sistemi İncele
                         </Link>
                       </Button>
                       <Button size="sm" className="shadow-[0_0_16px_rgba(99,102,241,0.35)]" asChild>
-                        <Link href="/audit">Teklif Al</Link>
+                        <Link href="/audit" title="Teklif Al">Teklif Al</Link>
                       </Button>
                     </div>
                   </motion.div>
@@ -187,7 +187,7 @@ export default function SolutionsPage() {
           </p>
           <div className="mt-8">
             <Button size="lg" className="w-full sm:w-auto shadow-[0_0_24px_rgba(99,102,241,0.5)]" asChild>
-              <Link href="/audit">Teklif Al</Link>
+              <Link href="/audit" title="Teklif Al">Teklif Al</Link>
             </Button>
           </div>
         </motion.div>

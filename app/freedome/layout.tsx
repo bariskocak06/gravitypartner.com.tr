@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: "Özgür Reklam Mimarı | FreeDome | Gravity",
   description:
     "Ürün fotoğrafından Meta reklamları için A/B test materyalleri ve hedef kitle analizi üreten yapay zeka aracı.",
+  alternates: { canonical: "/freedome" },
 };
 
 export default function FreedomeLayout({

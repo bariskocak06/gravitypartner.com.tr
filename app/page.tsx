@@ -70,7 +70,7 @@ export default function Home() {
 
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Button size="lg" className="w-full sm:w-auto" asChild>
-                <Link href="/audit">Sistem Teşhisi Talep Et</Link>
+                <Link href="/audit" title="Sistem Teşhisi Talep Et">Sistem Teşhisi Talep Et</Link>
               </Button>
               <Button
                 size="lg"
@@ -78,7 +78,7 @@ export default function Home() {
                 className="w-full sm:w-auto"
                 asChild
               >
-                <Link href="#how-it-works">Nasıl Çalıştığını Gör</Link>
+                <Link href="#how-it-works" title="Nasıl Çalıştığını Gör">Nasıl Çalıştığını Gör</Link>
               </Button>
             </div>
 

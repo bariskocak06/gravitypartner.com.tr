@@ -16,26 +16,16 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gravitypartner.com.tr";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://gravitypartner.com.tr"
-  ),
+  metadataBase: new URL(baseUrl),
   title: "Gravity — Meta Performans Altyapısı",
   description:
     "Gravity, Meta reklam algoritmalarının sizin aleyhinize değil, lehinize çalışmasını sağlayan veri altyapısı ve performans sistemleri kurar.",
-  keywords: [
-    "Meta reklam",
-    "performans reklamcılığı",
-    "CAPI",
-    "Meta Pixel",
-    "reklam altyapısı",
-    "büyüme mühendisliği",
-    "dijital reklam",
-    "ROAS",
-    "EMQ",
-    "sinyal kalitesi",
-    "Gravity",
-  ],
+  authors: [{ name: "Gravity", url: baseUrl }],
+  publisher: "Gravity",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Gravity — Meta Performans Altyapısı",
     description:
@@ -62,7 +52,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gravitypartner.com.tr";
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",

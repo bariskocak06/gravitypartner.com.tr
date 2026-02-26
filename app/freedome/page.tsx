@@ -193,6 +193,7 @@ export default function FreedomePage() {
         </div>
         <Link
           href="/"
+          title="Gravity Ana Sayfa"
           className="text-sm text-muted-foreground hover:text-foreground font-mono transition-colors"
         >
           ← Gravity
@@ -375,7 +376,7 @@ export default function FreedomePage() {
 
           <p className="text-center text-sm text-muted-foreground">
             Meta reklamlarına doğrudan yükleme için{" "}
-            <Link href="/contact" className="text-primary hover:underline">
+            <Link href="/contact" title="Gravity İletişim" className="text-primary hover:underline">
               Gravity ile iletişime geçin
             </Link>
             .

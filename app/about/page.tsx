@@ -324,10 +324,10 @@ export default function AboutPage() {
               className="w-full sm:w-auto shadow-[0_0_24px_rgba(99,102,241,0.5)]"
               asChild
             >
-              <Link href="/audit">Sistem Teşhisi İste</Link>
+              <Link href="/audit" title="Sistem Teşhisi İste">Sistem Teşhisi İste</Link>
             </Button>
             <Button size="lg" variant="outline" className="w-full sm:w-auto" asChild>
-              <Link href="/solutions">Çözümleri İncele</Link>
+              <Link href="/solutions" title="Çözümleri İncele">Çözümleri İncele</Link>
             </Button>
           </div>
           <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.24em] text-indigo-300">

@@ -28,6 +28,7 @@ export function Footer() {
             <Link
               key={link.href}
               href={link.href}
+              title={link.label}
               className="transition-colors hover:text-zinc-100"
             >
               {link.label}
