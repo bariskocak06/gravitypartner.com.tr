@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, useScroll, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 const navLinks = [
   { href: "/", label: "Ana Sayfa" },
@@ -18,6 +19,7 @@ const navLinks = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -107,6 +109,40 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {status !== "loading" && (
+            status === "authenticated" ? (
+              <span className="hidden sm:flex items-center gap-2 text-xs text-zinc-400 font-mono max-w-[140px] truncate" title={session.user?.email ?? ""}>
+                {session.user?.email}
+              </span>
+            ) : (
+              <>
+                <Link
+                  href="/auth/register"
+                  className="hidden sm:inline-flex text-xs font-mono text-zinc-500 hover:text-zinc-100 transition"
+                  title="Üye ol"
+                >
+                  Üye ol
+                </Link>
+                <Link
+                  href="/auth/signin"
+                  className="hidden sm:inline-flex text-xs font-mono text-zinc-400 hover:text-zinc-100 transition"
+                  title="Giriş yap"
+                >
+                  Giriş yap
+                </Link>
+              </>
+            )
+          )}
+          {status === "authenticated" && (
+            <button
+              type="button"
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="hidden sm:inline-flex text-xs font-mono text-zinc-500 hover:text-zinc-300 transition"
+              title="Çıkış yap"
+            >
+              Çıkış
+            </button>
+          )}
           <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
             <Link href="/audit" title="Sistem Teşhisi Talep Et">Sistem Teşhisi Talep Et</Link>
           </Button>
@@ -171,7 +207,38 @@ export function Navbar() {
                     </Link>
                   );
                 })}
-                <div className="mt-4 border-t border-[#1F1F1F] pt-4">
+                <div className="mt-4 border-t border-[#1F1F1F] pt-4 space-y-2">
+                  {status === "authenticated" ? (
+                    <>
+                      <p className="px-4 text-xs text-zinc-500 font-mono truncate" title={session.user?.email ?? ""}>
+                        {session.user?.email}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => { setIsMenuOpen(false); signOut({ callbackUrl: "/" }); }}
+                        className="block w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-zinc-400 hover:bg-[#1a1a1a] hover:text-zinc-100"
+                      >
+                        Çıkış yap
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/auth/register"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block rounded-lg px-4 py-3 text-sm font-medium text-zinc-400 hover:bg-[#1a1a1a] hover:text-zinc-100"
+                      >
+                        Üye ol
+                      </Link>
+                      <Link
+                        href="/auth/signin"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block rounded-lg px-4 py-3 text-sm font-medium text-zinc-300 hover:bg-[#1a1a1a] hover:text-zinc-100"
+                      >
+                        Giriş yap
+                      </Link>
+                    </>
+                  )}
                   <Button variant="outline" size="lg" className="w-full" asChild>
                     <Link href="/audit" onClick={() => setIsMenuOpen(false)} scroll title="Sistem Teşhisi Talep Et">
                       Sistem Teşhisi Talep Et

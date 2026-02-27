@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { SessionProvider } from "@/components/providers/session-provider";
+import { SignedInBanner } from "@/components/signed-in-banner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -82,11 +85,16 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
-        <div className="flex min-h-screen flex-col bg-background text-foreground">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <SessionProvider>
+          <div className="flex min-h-screen flex-col bg-background text-foreground">
+            <Suspense fallback={null}>
+              <SignedInBanner />
+            </Suspense>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );
